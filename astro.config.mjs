@@ -4,4 +4,6 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
 	integrations: [tailwind(),mdx()],
+	site: 'https://sadbath.github.io',
+	base: '/math-land',
 });
