@@ -1,0 +1,34 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import ChapterLayout from '../../layouts/ChapterLayout.astro';
+
+export async function getStaticPaths() {
+    const chapters = await getCollection('chapters');
+    return chapters.map(entry => ({
+        params: { slug: entry.slug },
+    }));
+}
+
+const { slug } = Astro.params;
+const entry = await getEntry('chapters', slug!);
+
+if (!entry) {
+    return Astro.redirect('/404');
+}
+
+// --- NEW LOGIC TO GET SIBLING CHAPTERS ---
+// 1. Determine the current topic from the slug (e.g., "adv-func")
+const topic = slug!.split('/')[0];
+
+// 2. Get all chapters and filter them to find siblings in the same topic
+const allChapters = await getCollection('chapters');
+const navChapters = allChapters
+    .filter(chapter => chapter.slug.startsWith(topic + '/'))
+    .sort((a, b) => a.slug.localeCompare(b.slug)); // Sort chapters by slug (filename)
+
+const { Content, headings } = await entry.render();
+---
+<!-- Pass the new `navChapters` prop to the layout -->
+<ChapterLayout frontmatter={entry.data} headings={headings} navChapters={navChapters}>
+    <Content />
+</ChapterLayout>

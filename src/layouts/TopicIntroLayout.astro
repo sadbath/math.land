@@ -1,0 +1,86 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Link from '../components/Link.astro';
+
+const { title, description, chapters } = Astro.props;
+---
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{title} | Putting the "Why?" in Math</title>
+    <!-- Add your font links here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <style is:global>
+        :root {
+            --font-serif: 'IBM Plex Serif', serif;
+            --font-sans: 'IBM Plex Sans', sans-serif;
+        }
+        body {
+            background-color: #212529;
+            font-family: var(--font-serif);
+            color: #d8dbe0;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .intro-header h1 {
+            font-family: var(--font-sans);
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .intro-header p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #adb5bd;
+            max-width: 650px;
+        }
+        .chapter-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 3rem;
+            border-top: 1px solid #495057;
+        }
+        .chapter-list li {
+            border-bottom: 1px solid #495057;
+        }
+        .chapter-list a {
+            display: block;
+            padding: 1.5rem 1rem;
+            text-decoration: none;
+            color: #ced4da;
+            font-size: 1.25rem;
+            font-family: var(--font-sans);
+            transition: background-color 0.2s;
+        }
+        .chapter-list a:hover {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<Navbar /> <!-- You might want a simpler navbar here -->
+<main class="container">
+    <header class="intro-header">
+        <h1>{title}</h1>
+        <p>{description}</p>
+    </header>
+
+    <ul class="chapter-list">
+        {chapters.map(chapter => (
+                <li>
+                    <a href={`/chapters/${chapter.slug}`}>
+                        {chapter.data.title}
+                    </a>
+                </li>
+        ))}
+    </ul>
+</main>
+</body>
+</html>

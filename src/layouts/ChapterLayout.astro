@@ -1,0 +1,173 @@
+---
+import TableOfContents from '../components/TableOfContents.astro';
+import Navbar from '../components/Navbar.astro';
+
+// --- EDITED ---
+// We now also accept `navChapters` to pass to the dynamic Navbar.
+// Default values prevent the component from crashing if a prop is missing.
+const { frontmatter = {}, headings = [], navChapters = [] } = Astro.props;
+
+// This logic remains the same.
+const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = frontmatter;
+---
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{title} | Putting the "Why?" in Math</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/phantom-sans" rel="stylesheet">
+
+    <style is:global>
+        /* All of your existing styles are preserved below */
+        :root {
+            --font-serif: 'IBM Plex Serif', serif;
+            --font-sans: 'IBM Plex Sans', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-main-title: 'Phantom Sans', sans-serif;
+            --toc-width: 300px;
+        }
+        body {
+            background-color: #f8f9fa;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #212529;
+            margin: 0;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content {
+            width: 100%;
+            max-width: 700px;
+            padding: 10px;
+        }
+        .chapter-header {
+            padding-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .chapter-header h1 {
+            font-size: 1em;
+            font-family: var(--font-sans);
+        }
+        .chapter-header .chapter-num {
+            font-weight: 400;
+            color: #495057;
+            margin-bottom: 2px;
+        }
+        .chapter-header .title {
+            font-weight: 600;
+            font-size: 1.9em;
+        }
+        .edit-button {
+            color: #adb5bd;
+            font-size: 0.95rem;
+            font-weight: 400;
+            margin-left: 0.5rem;
+        }
+        .edit-button:hover {
+            background-color: #f1f3f5;
+        }
+        .content-prose h2 {
+            margin: 80px 0 20px;
+            font-family: var(--font-sans);
+        }
+        .content-prose strong {
+            font-weight: 600;
+            color: #000;
+        }
+        .content-prose .a-link {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #5f3dc4;
+            text-shadow: none;
+            text-decoration: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='4'%3e%3cpath d='M0,2 Q5,0 10,2 T20,2' stroke='%23F25F5C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+            background-repeat: repeat-x;
+            background-position: 0 100%;
+            background-size: 12px 4px;
+            padding-bottom: 5px;
+            transition: color 0.2s ease-in-out;
+        }
+        .content-prose .a-link:hover {
+            color: #000000;
+            background-color: transparent;
+        }
+        .content-prose .a-name {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #212529;
+            text-decoration: underline;
+            text-decoration-color: #b197fc;
+            text-underline-offset: 4px;
+        }
+        .content-prose .a-name:hover {
+            background-color: #f1f3f5;
+        }
+        .content-prose .a-ext-link {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #495057;
+            text-decoration: none;
+            position: relative;
+            margin-right: 0.3em;
+            background-image: linear-gradient(to right, #868e96, #868e96);
+            background-repeat: no-repeat;
+            background-position: 0 100%;
+            background-size: 100% 1px;
+        }
+        .content-prose .a-ext-link::after {
+            content: '↗';
+            position: absolute;
+            font-size: 0.55em;
+            top: -0.3em;
+            right: -0.01em;
+            color: #868e96;
+            transition: all 0.2s ease-out;
+        }
+        .content-prose .a-ext-link:hover {
+            background-color: transparent;
+        }
+        .content-prose .a-ext-link:hover::after {
+            transform: translate(3px, -3px);
+            color: #212529;
+        }
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            :root {
+                --toc-width: 0px;
+            }
+        }
+    </style>
+</head>
+<body>
+<TableOfContents headings={headings} />
+
+<main>
+    <!-- EDITED: Pass the dynamic list of chapters and the current title to the Navbar -->
+    <Navbar chapters={navChapters} activeChapterTitle={title} />
+
+    <header class="content chapter-header">
+        <h1>
+            <div class="chapter-num">Chapter {chapterNumber}</div>
+            <div class="title">
+                {title}
+                <a class="edit-button" href={editUrl} target="_blank" rel="noopener noreferrer">Edit on GitHub</a>
+            </div>
+        </h1>
+    </header>
+
+    <div class="content content-prose">
+        <slot />
+    </div>
+</main>
+</body>
+</html>

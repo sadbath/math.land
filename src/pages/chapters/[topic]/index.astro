@@ -1,0 +1,31 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import TopicIntroLayout from '../../../layouts/TopicIntroLayout.astro';
+
+// 1. Find all unique topics (subdirectories) to generate a page for each
+export async function getStaticPaths() {
+    const allChapters = await getCollection('chapters');
+    const topics = new Set(allChapters.map(chapter => chapter.slug.split('/')[0]));
+
+    return Array.from(topics).map(topic => ({
+        params: { topic },
+    }));
+}
+
+// 2. Get the current topic from the URL
+const { topic } = Astro.params;
+
+// 3. Fetch the metadata for this topic from our new 'topics' collection
+const topicInfo = await getEntry('topics', topic!);
+if (!topicInfo) {
+    throw new Error(`Topic info not found for "${topic}". Make sure a file exists at 'src/content/topics/${topic}.json'.`);
+}
+
+// 4. Fetch all chapters and filter for only those in the current topic's subdirectory
+const allChapters = await getCollection('chapters');
+const chaptersInTopic = allChapters
+    .filter(chapter => chapter.slug.startsWith(topic + '/'))
+    .sort((a, b) => a.slug.localeCompare(b.slug)); // Sort chapters alphabetically
+---
+
+<TopicIntroLayout title={topicInfo.data.title} description={topicInfo.data.description} chapters={chaptersInTopic} />

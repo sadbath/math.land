@@ -1,0 +1,49 @@
+---
+// This component takes a 'text' prop (a string).
+const { text } = Astro.props;
+
+// It splits the string into an array of words.
+const words = text.split(' ');
+---
+
+<!--
+  The main wrapper span.
+  We will target the inner spans from here.
+-->
+<span class="colored-title">
+  <!--
+    We loop over the array of words and render
+    each one inside its own span.
+  -->
+    {words.map(word => (
+            <span>{word}</span>
+    ))}
+</span>
+
+<style>
+    /*
+      This targets each inner span tag based on its position (1st, 2nd, 3rd...).
+      This is how each word gets a unique color.
+    */
+    .colored-title span:nth-child(1) {
+        color: #e03131; /* Red */
+    }
+    .colored-title span:nth-child(2) {
+        color: #f59f00; /* Amber */
+    }
+    .colored-title span:nth-child(3) {
+        color: #40c057; /* Green */
+    }
+    .colored-title span:nth-child(4) {
+        color: #1971c2; /* Blue */
+    }
+    .colored-title span:nth-child(5) {
+        color: #9c36b5; /* Grape */
+    }
+    /* If you have more than 5 words, the colors will repeat every 5 words */
+    .colored-title span:nth-child(5n + 1) { color: #e03131; }
+    .colored-title span:nth-child(5n + 2) { color: #f59f00; }
+    .colored-title span:nth-child(5n + 3) { color: #40c057; }
+    .colored-title span:nth-child(5n + 4) { color: #1971c2; }
+    .colored-title span:nth-child(5n + 5) { color: #9c36b5; }
+</style>

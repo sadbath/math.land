@@ -1,0 +1,124 @@
+---
+// NOTE: This layout is designed for a single-column, centered page like an intro.
+// The TableOfContents component is not used here to match the target image.
+// import TableOfContents from '../components/TableOfContents.astro';
+
+// const { headings } = Astro.props; // Headings are not needed for this layout
+---
+<div class="intro-wrapper">
+    <main class="intro-main">
+        <div class="intro-prose">
+            <!-- The content from your intro MDX file will be rendered here -->
+            <slot />
+        </div>
+    </main>
+</div>
+
+<style is:global>
+    /*
+      These styles are is:global so they can style the raw HTML
+      coming from your MDX file (the <slot />).
+    */
+
+    /* --- Main Layout Structure --- */
+    .intro-wrapper {
+        background-color: #141517; /* Dark background from image */
+        color: #ced4da; /* Light gray text color */
+        font-family: "IBM Plex Serif", serif;
+        line-height: 1.8;
+    }
+
+    .intro-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center the prose content block */
+        padding: 100px 20px; /* Generous vertical padding */
+    }
+
+    .intro-prose {
+        width: 100%;
+        max-width: 700px; /* Standard readable width */
+        font-size: 1.1rem;
+    }
+
+    /* --- Typography & Elements inside the content --- */
+
+    /* For the main page title like "Putting the 'You' in CPU" */
+    .intro-prose h1 {
+        font-family: "IBM Plex Serif", serif;
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #f8f9fa; /* Brighter white for main title */
+    }
+
+    /* For subtitles under the main H1 */
+    .intro-prose h1 + p {
+        text-align: center;
+        font-style: italic;
+        color: #adb5bd;
+        max-width: 500px;
+        margin: 0 auto 40px auto;
+    }
+
+    /* For headings like "From the beginning..." */
+    .intro-prose h3 {
+        margin: 80px 0 20px;
+        font-family: "IBM Plex Sans", sans-serif;
+        color: #e9ecef;
+        font-weight: 600;
+    }
+
+    .intro-prose p {
+        margin: 20px 0;
+    }
+
+    .intro-prose img {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        display: block;
+        margin: 40px auto;
+        border-radius: 4px; /* Slight rounding for images */
+    }
+
+    /* For callout boxes like "In a hurry?" */
+    .intro-prose blockquote {
+        background: #212529; /* Darker gray for contrast */
+        border-left: 3px solid #495057;
+        margin: 40px 0;
+        padding: 20px 30px;
+    }
+
+    .intro-prose blockquote p {
+        margin: 14px 0;
+    }
+
+    /* Link styling for dark background */
+    .intro-prose a {
+        color: #748ffc; /* A pleasant light blue for links */
+        text-decoration: none;
+        background-image: linear-gradient(to top, #364fc733 0%, #364fc733 100%);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: 0 100%;
+    }
+
+    .intro-prose a:hover {
+        color: #91a7ff;
+        background-size: 100% 5px; /* Underline grows on hover */
+    }
+
+    /* --- Responsive Breakpoint --- */
+    @media (max-width: 768px) {
+        .intro-main {
+            padding: 60px 15px;
+        }
+        .intro-prose h1 {
+            font-size: 2.5rem;
+        }
+        .intro-prose {
+            font-size: 1rem;
+        }
+    }
+</style>

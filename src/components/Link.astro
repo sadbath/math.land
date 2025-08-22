@@ -1,0 +1,28 @@
+---
+interface Props {
+    href: string;
+    type?: 'squiggle' | 'name' | 'external';
+}
+
+const { href, type = 'squiggle' } = Astro.props;
+
+let linkClass = '';
+
+// Determine which CSS class to apply based on the `type` prop
+switch (type) {
+    case 'name':
+        linkClass = 'a-name';
+        break;
+    case 'external':
+        linkClass = 'a-ext-link';
+        break;
+    case 'squiggle':
+    default:
+        linkClass = 'a-link';
+        break;
+}
+---
+
+<a href={href} class={linkClass}>
+    <slot /> <!-- This will render the text inside the link -->
+</a>

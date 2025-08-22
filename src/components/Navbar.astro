@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	// We pass the full chapter entries from the parent page
+	chapters: CollectionEntry<'chapters'>[];
+	// The title of the currently active chapter
+	activeChapterTitle?: string;
+}
+
+const { chapters = [], activeChapterTitle } = Astro.props;
+---
+
+<nav class="chapter-nav">
+	<ul class="flex justify-center items-center gap-4 py-1">
+		{chapters.map((chapter, index) => {
+			const isActive = chapter.data.title === activeChapterTitle;
+
+			// Dynamically generate opacity and responsive classes based on index
+            let opacityClass = 'opacity-50';
+			if (index < 2) opacityClass = 'opacity-70';
+			if (index > 2) opacityClass = 'opacity-40';
+			if (index > 4) opacityClass = 'opacity-20';
+
+			let responsiveClass = '';
+			if (index > 2) responsiveClass = 'hidden sm:inline';
+			if (index > 4) responsiveClass = 'hidden md:inline';
+
+			return (
+				<li class:list={[
+					'transition-opacity',
+					'hover:opacity-100',
+					!isActive && opacityClass,
+					responsiveClass,
+					{
+						'relative opacity-70 after:content-[\'\'] after:absolute after:top-[calc(100%-6px)] after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-b-red-500': isActive
+					}
+				]}>
+					<a href={`/chapters/${chapter.slug}`} class="block text-center px-2 py-0.5">
+						<div class="text-xs font-normal text-gray-500 dark:text-gray-400">
+							Ch. {chapter.data.chapterNumber ?? index + 1}
+						</div>
+						<div class="text-base text-current">{chapter.data.title}</div>
+					</a>
+				</li>
+			);
+		})}
+	</ul>
+</nav>
+
+<style>
+	.chapter-nav {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+		border-top: 1px solid #4a5568;
+		padding-top: 1rem; /* Reduced padding slightly */
+	}
+	.chapter-nav li:hover {
+		background-color: transparent;
+	}
+</style>

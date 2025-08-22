@@ -1,0 +1,214 @@
+---
+
+// --- Data for your Lesson Hub ---
+// Define all your lesson series here. This makes it easy to add more.
+const lessons = [
+	{
+		title: 'How Computers Work',
+		description: 'A deep dive into the fundamentals of CPUs...',
+		// UPDATE THIS to point to the intro page
+		url: '/chapters/cpu/',
+	},
+	{
+		title: 'Advanced Functions',
+		description: 'Master transformations, domain and range...',
+		// UPDATE THIS to point to the intro page
+		url: '/chapters/adv-func/',
+	},
+	{
+		title: 'Calculus Concepts',
+		description: 'Understanding the "why" behind derivatives...',
+		// UPDATE THIS to point to the intro page
+		url: '/chapters/calculus/',
+	},
+];
+---
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Putting the "Why?" in Math</title>
+	<!-- Add your font links here -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+	<style is:global>
+		:root {
+			--font-serif: 'IBM Plex Serif', serif;
+			--font-sans: 'IBM Plex Sans', sans-serif;
+			--font-mono: 'IBM Plex Mono', monospace;
+		}
+		body {
+			background-color: #212529; /* Dark background */
+			font-family: var(--font-serif);
+			color: #d8dbe0;
+			margin: 0;
+		}
+
+		/* --- Hero Section (The Explainer) --- */
+		.hero {
+			padding: 15vh 2rem 5rem; /* Added more bottom padding for the navbar */
+			background-color: #343a40;
+			text-align: center;
+			position: relative;
+			color: #fff;
+		}
+		.hero-content {
+			max-width: 650px;
+			margin: 0 auto;
+		}
+		.hero h1 {
+			font-family: var(--font-sans);
+			font-size: 2.5rem;
+			font-weight: 700;
+			display: inline-flex;
+			gap: 0.5rem;
+			flex-wrap: wrap; /* Allows title to wrap on small screens */
+			justify-content: center;
+		}
+		/* Classes for the colorful title */
+		.c-red    { color: #ff6b6b; }
+		.c-orange { color: #f08c00; }
+		.c-yellow { color: #fcc419; font-style: italic; }
+		.c-green  { color: #94d82d; }
+		.c-blue   { color: #4dabf7; }
+
+		.hero .tagline {
+			font-style: italic;
+			font-size: 1.1rem;
+			line-height: 1.8;
+			margin: 1.5rem 0;
+		}
+		.hero .author-info {
+			margin-top: 1.5rem;
+			display: block;
+			line-height: 1.7;
+		}
+		.hero .navbar-container {
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		/* --- Lesson Hub Section --- */
+		.lesson-hub {
+			padding: 4rem 2rem;
+			max-width: 900px;
+			margin: 0 auto;
+		}
+		.lesson-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 2rem;
+		}
+		.lesson-card {
+			display: block;
+			background-color: #343a40;
+			border: 2px solid #495057;
+			padding: 1.5rem;
+			text-decoration: none;
+			transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+			border-radius: 12px 4px 15px 6px; /* Hand-drawnish border */
+		}
+		.lesson-card:hover {
+			transform: translateY(-6px) rotate(-1deg);
+			box-shadow: 5px 5px 0px #9f8eee;
+			border-color: #868e96;
+		}
+		.lesson-card h2 {
+			margin: 0 0 0.5rem 0;
+			color: #fff; /* Keep title white */
+		}
+		.lesson-card p {
+			margin: 0;
+			color: #adb5bd;
+			line-height: 1.6;
+		}
+
+		/* --- Your Reusable Link Styles --- */
+		.a-link {
+			font-family: Georgia, 'Times New Roman', Times, serif;
+			color: #d8dbe0;
+			text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5), 0px -1px 1px rgba(255, 255, 255, 0.1);
+			text-decoration: none;
+			background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='4'%3e%3cpath d='M0,2 Q5,0 10,2 T20,2' stroke='%23F25F5C' stroke-width='2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+			background-repeat: repeat-x;
+			background-position: 0 100%;
+			background-size: 12px 4px;
+			padding-bottom: 5px;
+		}
+		.a-name {
+			font-family: Georgia, 'Times New Roman', Times, serif;
+			color: #d8dbe0;
+			text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5), 0px -1px 1px rgba(255, 255, 255, 0.1);
+			text-decoration: underline;
+			text-decoration-color: #9f8eee;
+			text-underline-offset: 4px;
+		}
+		.a-ext-link {
+			font-family: Georgia, 'Times New Roman', Times, serif;
+			color: #d8dbe0;
+			text-decoration: none;
+			position: relative;
+			margin-right: 0.3em;
+			background-image: linear-gradient(to right, #aeb3bd, #aeb3bd);
+			background-repeat: no-repeat;
+			background-position: 0 100%;
+			background-size: 100% 1px;
+		}
+		.a-ext-link::after {
+			content: '↗';
+			position: absolute;
+			font-size: 0.55em;
+			top: -0.3em;
+			right: -0.01em;
+			color: #aeb3bd;
+			transition: all 0.2s ease-out;
+		}
+		a:hover, .a-link:hover, .a-name:hover, .a-ext-link:hover {
+			background-color: #343a40; /* General hover for links */
+		}
+		.a-ext-link:hover::after {
+			transform: translate(3px, -3px);
+			color: #d8dbe0;
+		}
+	</style>
+</head>
+
+<body>
+<!-- Main "Explainer" Section -->
+<section class="hero">
+	<div class="hero-content">
+		<h1>
+			<span class="c-red">Putting</span>
+			<span class="c-orange">the</span>
+			<span class="c-yellow">Why?</span>
+			<span class="c-green">in</span>
+			<span class="c-blue">Math</span>
+		</h1>
+		<p class="tagline">
+			Confused by Math? You're not alone. This guide explains what functions really are, how transformations work, and how concepts connect. No fluff — just <a href="#lesson-hub" class="a-link">clear, simple explanations</a> to help math make sense.
+		</p>
+		<span class="author-info">
+                Written by <a class="a-name" href="#">SadBath</a> · August, 2025<br />
+                Heavily inspired by <a class="a-ext-link" href="https://cpu.land">cpu.land</a> by Lexi Mattick & Hack Club
+            </span>
+	</div>
+</section>
+
+<!-- The Hub for all your lessons -->
+<main class="lesson-hub" id="lesson-hub">
+	<div class="lesson-grid">
+		{lessons.map(lesson => (
+			<a href={lesson.url} class="lesson-card">
+				<!-- Using the "a-link" style on the title for a fun, consistent look -->
+				<h2 class="a-link">{lesson.title}</h2>
+				<p>{lesson.description}</p>
+			</a>
+		))}
+	</div>
+</main>
+</body>
+</html>
