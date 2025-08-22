@@ -1,35 +1,28 @@
 ---
 import Navbar from '../components/Navbar.astro';
 
-// 1. Get the base URL from Astro's environment variables.
-const baseUrl = import.meta.env.BASE_URL;
 
 // 2. Define your lesson data with *relative* paths.
-const lessonData = [
+const lessons = [
 	{
 		title: 'How Computers Work',
 		description: 'A deep dive into the fundamentals of CPUs...',
 		// Use a relative path, without a leading slash
-		url: 'chapters/cpu/',
+		url: '/math.land/chapters/cpu/',
 	},
 	{
 		title: 'Advanced Functions',
 		description: 'Master transformations, domain and range...',
-		url: 'chapters/adv-func/',
+		url: '/math.land/chapters/adv-func/',
 	},
 	{
 		title: 'Calculus Concepts',
 		description: 'Understanding the "why" behind derivatives...',
-		url: 'chapters/calculus/',
+		url: '/math.land/chapters/calculus/',
 	},
 ];
 
-// 3. Create the final `lessons` array by mapping over the data and prepending the base URL.
-//    This helper ensures slashes are handled correctly.
-const lessons = lessonData.map(lesson => ({
-	...lesson,
-	url: new URL(lesson.url, `http://dummy.com${baseUrl}`).pathname,
-}));
+
 ---
 <html lang="en">
 <head>

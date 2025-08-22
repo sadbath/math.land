@@ -36,7 +36,7 @@ const { chapters = [], activeChapterTitle } = Astro.props;
 						'relative opacity-70 after:content-[\'\'] after:absolute after:top-[calc(100%-6px)] after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-b-red-500': isActive
 					}
 				]}>
-					<a href={`/chapters/${chapter.slug}`} class="block text-center px-2 py-0.5">
+					<a href={`/math.land/chapters/${chapter.slug}`} class="block text-center px-2 py-0.5">
 						<div class="text-xs font-normal text-gray-500 dark:text-gray-400">
 							Ch. {chapter.data.chapterNumber ?? index + 1}
 						</div>
