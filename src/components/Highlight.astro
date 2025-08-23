@@ -1,0 +1,23 @@
+---
+const { color = 'yellow' } = Astro.props;
+
+// A map to associate color names with hex codes
+const colorMap = {
+    yellow: '#fcc419',
+    green: '#94d82d',
+    blue: '#4dabf7',
+    pink: '#f06595'
+};
+
+const textColor = colorMap[color] || color; // Use mapped color or a direct hex code
+---
+<span class="highlight" style={`color: ${textColor};`}>
+    <slot />
+</span>
+
+<style>
+    .highlight {
+        font-weight: 700;
+        font-style: italic;
+    }
+</style>

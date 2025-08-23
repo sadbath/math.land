@@ -5,5 +5,5 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
 	integrations: [tailwind(),mdx()],
 	site: 'https://sadbath.github.io',
-	base: '/math-land',
+	base: '/math.land',
 });

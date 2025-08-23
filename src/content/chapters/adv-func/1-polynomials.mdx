@@ -1,0 +1,66 @@
+---
+title: 'Polynomials'
+chapterNumber: 1
+editUrl: 'https://github.com/sadbath/math.land/blob/main/src/content/chapters/adv-func/polynomials-intro.mdx'
+---
+import Link from '../../../components/Link.astro';
+import Emph from '../../../components/Emph.astro';
+import Highlight from '../../../components/Highlight.astro';
+import RuleList from '../../../components/RuleList.astro';
+
+Advanced Functions is <Highlight color="yellow">HARD</Highlight>. Everyone says it, so it must be true... right?
+
+But *why* is it hard? Sure, the symbols get confusing, but the <Emph>quadratic formula</Emph> looks like witchcraft to the average 8th grader, yet we know it's just a tool. In fact, the quadratic formula is a <Emph>shortcut</Emph>; it just looks complicated at first glance.
+
+I think that basic idea represents all of math: the more you learn, the more shortcuts for older material you will find.
+
+> Math isn't hard, it just **looks** hard.
+
+Advanced Functions is all of that, just more. It's not a new subject—it's the <Emph>DLC to Functions</Emph>.
+
+To get started on this DLC, let's head back to a topic we all know and "love": the <Link href="/chapters/adv-func/polynomials" type="name">Polynomials</Link>.
+
+### What is a Polynomial?
+
+A **Polynomial** is simply an expression with one or more terms added or subtracted.
+
+> The name is a clue! It literally means "many terms." This is why we have special names for the ones with fewer terms:
+> - **Monomial:** One term (<Highlight color="green">mono-</Highlight>)
+> - **Binomial:** Two terms (<Highlight color="blue">bi-</Highlight>)
+> - **Trinomial:** Three terms (<Highlight color="pink">tri-</Highlight>)
+
+Anything with one or more terms is technically a polynomial. They are the simple, reliable building blocks we need for this journey.
+
+### The Anatomy of a Term
+
+Okay, so a polynomial is made of terms. But what *is* a term, really? A single term, like `5x³`, has a few key parts that we'll see over and over.
+
+<ul>
+    <li>The <Highlight color="blue">Coefficient</Highlight>: This is the number in front, like the <strong>5</strong>. It's the multiplier.</li>
+    <li>The <Highlight color="pink">Variable</Highlight>: This is the letter part that can change, like the <strong>x</strong>.</li>
+    <li>The <Highlight color="green">Exponent</Highlight>: This is the small number up top, like the <strong>³</strong>, indicating the power.</li>
+</ul>
+
+Together, they form a single package deal: <Highlight color="blue">5</Highlight><Highlight color="pink">x</Highlight><Highlight color="green">³</Highlight>. When you string these together with addition or subtraction, you get a full-blown polynomial, like `5x³ - 2x + 7`.
+
+### The One Big Rule
+
+There's one crucial rule that separates a true polynomial from a look-alike, and it's all about the exponents.
+
+> The exponents on the variables **must be whole numbers** (0, 1, 2, 3, ...).
+
+No fractions. No negatives. If the exponent isn't a nice, clean, non-negative integer, it's not a polynomial.
+
+<RuleList type="good" title="These ARE Polynomials:">
+    - `7x² + 3` (Exponents are `2` and `0`, both are whole numbers.)
+    - `x⁵ - 2x⁴ + x` (Exponents are `5`, `4`, and `1`.)
+    - `12` (This is really `12x⁰`. The exponent is `0`, which is a whole number!)
+</RuleList>
+
+<RuleList type="bad" title="These are NOT Polynomials:">
+    - `3x⁻² + 1` (The `-2` is negative, which is not allowed.)
+    - `√x + 5` (A square root is a fractional exponent: `x¹/²`. Not a whole number.)
+    - `4/x - x²` (A variable in the denominator is a negative exponent: `4x⁻¹`. No go.)
+</RuleList>
+
+So, if you see negative exponents, fractional exponents, or variables in the denominator, you're not looking at a polynomial. It's a different beast, like a <Link href="/chapters/adv-func/rational-functions" type="name">Rational Function</Link>, which we'll tackle later in the DLC.

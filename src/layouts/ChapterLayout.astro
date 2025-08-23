@@ -2,12 +2,7 @@
 import TableOfContents from '../components/TableOfContents.astro';
 import Navbar from '../components/Navbar.astro';
 
-// --- EDITED ---
-// We now also accept `navChapters` to pass to the dynamic Navbar.
-// Default values prevent the component from crashing if a prop is missing.
 const { frontmatter = {}, headings = [], navChapters = [] } = Astro.props;
-
-// This logic remains the same.
 const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = frontmatter;
 ---
 <html lang="en">
@@ -77,13 +72,85 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
         .edit-button:hover {
             background-color: #f1f3f5;
         }
-        .content-prose h2 {
-            margin: 80px 0 20px;
-            font-family: var(--font-sans);
+
+        /* --- Blockquote Styling --- */
+        .content-prose blockquote {
+            border-left: 3px solid #868e96;
+            background-color: #e9ecef;
+            margin: 2rem 0;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            font-style: normal;
         }
+        .content-prose blockquote p {
+            margin: 0;
+        }
+
+        /* --- Header Styling --- */
+        .content-prose h1,
+        .content-prose h2,
+        .content-prose h3 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: #000;
+            line-height: 1.3;
+        }
+        .content-prose h1 {
+            font-size: 2.5rem;
+            margin: 3rem 0 1.5rem;
+        }
+        .content-prose h2 {
+            font-size: 2rem;
+            margin: 80px 0 20px;
+        }
+        .content-prose h3 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        /* === FIX STARTS HERE === */
+
+        /* --- List Styling --- */
+        /* This adds back the standard list styles for Markdown content */
+        .content-prose ul,
+        .content-prose ol {
+            /* This adds the space needed for bullets/numbers to appear */
+            padding-left: 25px;
+            /* Adds some vertical spacing around the entire list */
+            margin: 1.5rem 0;
+        }
+
+        /* This ensures list items have a bullet point */
+        .content-prose ul > li {
+            list-style-type: disc;
+        }
+
+        /* This ensures ordered list items have numbers */
+        .content-prose ol > li {
+            list-style-type: decimal;
+        }
+
+        /* Adds space between individual list items for readability */
+        .content-prose li {
+            margin-bottom: 0.5rem;
+            padding-left: 5px; /* Adds a little extra space between bullet and text */
+        }
+
+        /* === FIX ENDS HERE === */
+
         .content-prose strong {
             font-weight: 600;
             color: #000;
+        }
+        .content-prose .squiggle-emphasis {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #212529;
+            font-weight: 600;
+            text-shadow: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='20' height='4'%3e%3cpath d='M0,2 Q5,0 10,2 T20,2' stroke='%23F25F5C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+            background-repeat: repeat-x;
+            background-position: 0 100%;
+            background-size: 12px 4px;
+            padding-bottom: 5px;
         }
         .content-prose .a-link {
             font-family: Georgia, 'Times New Roman', Times, serif;
@@ -152,7 +219,6 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
 <TableOfContents headings={headings} />
 
 <main>
-    <!-- EDITED: Pass the dynamic list of chapters and the current title to the Navbar -->
     <Navbar chapters={navChapters} activeChapterTitle={title} />
 
     <header class="content chapter-header">

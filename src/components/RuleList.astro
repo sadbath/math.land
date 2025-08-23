@@ -1,0 +1,58 @@
+---
+const { type = 'good', title } = Astro.props; // type can be 'good' or 'bad'
+---
+<div class:list={['rule-list', type]}>
+    <h4>{title}</h4>
+    <ul>
+        <slot />
+    </ul>
+</div>
+
+<style>
+    .rule-list {
+        margin: 2rem 0;
+        padding: 1rem 1.5rem;
+        border-left: 4px solid;
+        border-radius: 4px;
+    }
+    .rule-list h4 {
+        margin: 0 0 0.5rem;
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+    .rule-list h4::before {
+        font-size: 1.5rem;
+        margin-right: 0.75rem;
+    }
+    .rule-list ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+    .rule-list li {
+        margin-bottom: 0.5rem;
+    }
+    .rule-list code {
+        background-color: #f1f3f5;
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+    /* Type-specific styling */
+    .rule-list.good {
+        background-color: #e9fcf1;
+        border-color: #40c057; /* green */
+    }
+    .rule-list.good h4::before {
+        content: '✅';
+    }
+    .rule-list.bad {
+        background-color: #fff5f5;
+        border-color: #f03e3e; /* red */
+    }
+    .rule-list.bad h4::before {
+        content: '❌';
+    }
+</style>
