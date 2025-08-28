@@ -17,7 +17,6 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
     <link href="https://fonts.cdnfonts.com/css/phantom-sans" rel="stylesheet">
 
     <style is:global>
-        /* All of your existing styles are preserved below */
         :root {
             --font-serif: 'IBM Plex Serif', serif;
             --font-sans: 'IBM Plex Sans', sans-serif;
@@ -76,6 +75,7 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
         /* --- Blockquote Styling --- */
         .content-prose blockquote {
             border-left: 3px solid #868e96;
+            border-radius: 4px;
             background-color: #e9ecef;
             margin: 2rem 0;
             padding: 0.5rem 0 0.5rem 1.5rem;
@@ -107,36 +107,95 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
             margin: 2.5rem 0 1rem;
         }
 
-        /* === FIX STARTS HERE === */
-
         /* --- List Styling --- */
-        /* This adds back the standard list styles for Markdown content */
         .content-prose ul,
         .content-prose ol {
-            /* This adds the space needed for bullets/numbers to appear */
             padding-left: 25px;
-            /* Adds some vertical spacing around the entire list */
             margin: 1.5rem 0;
         }
-
-        /* This ensures list items have a bullet point */
         .content-prose ul > li {
             list-style-type: disc;
         }
-
-        /* This ensures ordered list items have numbers */
         .content-prose ol > li {
             list-style-type: decimal;
         }
-
-        /* Adds space between individual list items for readability */
         .content-prose li {
             margin-bottom: 0.5rem;
-            padding-left: 5px; /* Adds a little extra space between bullet and text */
+            padding-left: 5px;
         }
 
-        /* === FIX ENDS HERE === */
+        /* --- Table Styling --- */
+        .content-prose table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2.5rem 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .content-prose th,
+        .content-prose td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .content-prose th {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            background-color: #f8f9fa;
+            border-bottom-width: 2px;
+            border-bottom-color: #dee2e6;
+        }
+        .content-prose tbody tr:hover {
+            background-color: #f1f3f5;
+        }
 
+        /* --- Admonition (Warning/Note Boxes) Styling --- */
+        .content-prose .admonition {
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            border-left: 5px solid;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+        .content-prose .admonition > p:first-of-type {
+            margin-top: 0;
+        }
+        .content-prose .admonition-title {
+            display: block;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .content-prose .admonition.note {
+            border-color: #4dabf7;
+            background-color: #f1f8ff;
+        }
+        .content-prose .admonition.note .admonition-title {
+            color: #1971c2;
+        }
+        .content-prose .admonition.tip {
+            border-color: #69db7c;
+            background-color: #f0fff4;
+        }
+        .content-prose .admonition.tip .admonition-title {
+            color: #2f9e44;
+        }
+        .content-prose .admonition.warning {
+            border-color: #ffc078;
+            background-color: #fff9f0;
+        }
+        .content-prose .admonition.warning .admonition-title {
+            color: #e8590c;
+        }
+        .content-prose .admonition.danger {
+            border-color: #ff8787;
+            background-color: #fff5f5;
+        }
+        .content-prose .admonition.danger .admonition-title {
+            color: #c92a2a;
+        }
+
+        /* --- General Content Styling --- */
         .content-prose strong {
             font-weight: 600;
             color: #000;
@@ -205,6 +264,13 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
             transform: translate(3px, -3px);
             color: #212529;
         }
+        .content-prose pre {
+            background-color: #272822; /* ✅ THIS IS THE CORRECT MONOKAI BACKGROUND */
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
         @media (max-width: 900px) {
             body {
                 flex-direction: column;
@@ -220,7 +286,6 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
 
 <main>
     <Navbar chapters={navChapters} activeChapterTitle={title} />
-
     <header class="content chapter-header">
         <h1>
             <div class="chapter-num">Chapter {chapterNumber}</div>
@@ -230,10 +295,12 @@ const { chapterNumber = 'X', title = 'Untitled Chapter', editUrl = '#' } = front
             </div>
         </h1>
     </header>
-
     <div class="content content-prose">
         <slot />
     </div>
 </main>
+
+
+
 </body>
 </html>

@@ -7,53 +7,52 @@ import Link from '../../../components/Link.astro';
 import Emph from '../../../components/Emph.astro';
 import Highlight from '../../../components/Highlight.astro';
 import RuleList from '../../../components/RuleList.astro';
+import Admonition from '../../../components/Admonition.astro';
+import PolynomialEndBehaviour from '../../../components/games/adv-func/PolynomialEndBehaviour.astro'
+import FindTheDegree from '../../../components/games/adv-func/FindTheDegree.astro'
+import IsItAPolynomial from '../../../components/games/adv-func/IsItAPolynomial.astro'
+
 
 Advanced Functions is <Highlight color="yellow">HARD</Highlight>. Everyone says it, so it must be true... right?
 
-But *why* is it hard? Sure, the symbols get confusing, but the <Emph>quadratic formula</Emph> looks like witchcraft to the average 8th grader, yet we know it's just a tool. In fact, the quadratic formula is a <Emph>shortcut</Emph>; it just looks complicated at first glance.
-
-I think that basic idea represents all of math: the more you learn, the more shortcuts for older material you will find.
+But *why* is it hard? The <Emph>quadratic formula</Emph> looks like witchcraft to an 8th grader, yet we know it's just a shortcut. That's the secret to all of math: the more you learn, the more shortcuts you find.
 
 > Math isn't hard, it just **looks** hard.
 
-Advanced Functions is all of that, just more. It's not a new subject—it's the <Emph>DLC to Functions</Emph>.
+Advanced Functions isn't a new subject—it's the <Emph>DLC to Functions</Emph>. To get started on this DLC, let's revisit a topic we all know and "love": the <Link href="/chapters/adv-func/polynomials" type="name">Polynomials</Link>.
 
-To get started on this DLC, let's head back to a topic we all know and "love": the <Link href="/chapters/adv-func/polynomials" type="name">Polynomials</Link>.
+---
 
-### What is a Polynomial?
+## Anatomy of a Polynomial
 
-A **Polynomial** is simply an expression with one or more terms added or subtracted.
+A **Polynomial** is an expression with one or more pieces, called **terms**, added or subtracted. They're the simple, reliable building blocks for this journey. Let's put a typical one under the microscope: `7x² + x - 3`.
 
-> The name is a clue! It literally means "many terms." This is why we have special names for the ones with fewer terms:
-> - **Monomial:** One term (<Highlight color="green">mono-</Highlight>)
-> - **Binomial:** Two terms (<Highlight color="blue">bi-</Highlight>)
-> - **Trinomial:** Three terms (<Highlight color="pink">tri-</Highlight>)
+This polynomial is built from three terms: `7x²`, `x`, and `-3`. To describe it properly, we use some key vocabulary:
 
-Anything with one or more terms is technically a polynomial. They are the simple, reliable building blocks we need for this journey.
+*   **Coefficient:** The number multiplying a variable. In <Highlight color="green">7</Highlight>x², the coefficient is **7**. For `x`, it's an invisible **1**.
+*   **Constant:** The term that's just a number, with no variable in sight. Here, it's <Highlight color="pink">-3</Highlight>. Its value never changes.
+*   **Degree:** The single **highest exponent** in the entire polynomial. For `7x² + x - 3`, the highest exponent is **2**, so the degree is **2**. This is the most important clue to a polynomial's behavior.
 
-### The Anatomy of a Term
+> The name is a clue! *Poly-nomial* literally means "many terms." We have special names for the smaller ones:
+> - **Monomial:** One term (`5x³`)
+> - **Binomial:** Two terms (`x² - 9`)
+> - **Trinomial:** Three terms (`x² + 2x + 1`)
 
-Okay, so a polynomial is made of terms. But what *is* a term, really? A single term, like `5x³`, has a few key parts that we'll see over and over.
+<FindTheDegree />
 
-<ul>
-    <li>The <Highlight color="blue">Coefficient</Highlight>: This is the number in front, like the <strong>5</strong>. It's the multiplier.</li>
-    <li>The <Highlight color="pink">Variable</Highlight>: This is the letter part that can change, like the <strong>x</strong>.</li>
-    <li>The <Highlight color="green">Exponent</Highlight>: This is the small number up top, like the <strong>³</strong>, indicating the power.</li>
-</ul>
+---
 
-Together, they form a single package deal: <Highlight color="blue">5</Highlight><Highlight color="pink">x</Highlight><Highlight color="green">³</Highlight>. When you string these together with addition or subtraction, you get a full-blown polynomial, like `5x³ - 2x + 7`.
+## The One Rule to Rule Them All
+<Admonition type="warning"> this is a very poor attempt at a LotR reference. i am sorry</Admonition>
 
-### The One Big Rule
-
-There's one crucial rule that separates a true polynomial from a look-alike, and it's all about the exponents.
 
 > The exponents on the variables **must be whole numbers** (0, 1, 2, 3, ...).
 
-No fractions. No negatives. If the exponent isn't a nice, clean, non-negative integer, it's not a polynomial.
+No fractions. No negatives. If an exponent isn't a clean, non-negative integer, it's not a polynomial. It's that simple. If it passes this check, you can identify it every time.
 
 <RuleList type="good" title="These ARE Polynomials:">
-    - `7x² + 3` (Exponents are `2` and `0`, both are whole numbers.)
-    - `x⁵ - 2x⁴ + x` (Exponents are `5`, `4`, and `1`.)
+    - `7x² + 3` (Exponents `2` and `0` are whole numbers.)
+    - `x⁵ - 2x⁴ + x` (Exponents `5`, `4`, and `1` are all good.)
     - `12` (This is really `12x⁰`. The exponent is `0`, which is a whole number!)
 </RuleList>
 
@@ -63,4 +62,55 @@ No fractions. No negatives. If the exponent isn't a nice, clean, non-negative in
     - `4/x - x²` (A variable in the denominator is a negative exponent: `4x⁻¹`. No go.)
 </RuleList>
 
-So, if you see negative exponents, fractional exponents, or variables in the denominator, you're not looking at a polynomial. It's a different beast, like a <Link href="/chapters/adv-func/rational-functions" type="name">Rational Function</Link>, which we'll tackle later in the DLC.
+If you see weird stuff like roots or variables in the denominator, you're looking at a different beast, like a <Link href="/chapters/adv-func/rational-functions" type="name">Rational Function</Link>, which we'll tackle later.
+
+<IsItAPolynomial />
+
+---
+
+## What the Degree Tells You: A Prediction Machine
+
+Classifying a polynomial is easy, but *why* do we do it? Because its **degree** is a prediction machine. It tells you about the graph's overall shape, its turning points, and where its arms are headed.
+
+First, let's give them their proper names based on their degree:
+
+| Degree | Name              | Example           |
+|--------|-------------------|-------------------|
+| 0      | Constant          | `7`               |
+| 1      | Linear            | `x + 1`           |
+| 2      | Quadratic         | `x² - 4x + 3`     |
+| 3      | Cubic             | `-2x³ + 5`        |
+| 4+     | Quartic, Quintic… | *Depends on degree* |
+
+Now, here's what that degree number actually tells you:
+
+### End Behavior: Where Are You Headed?
+To figure out where a polynomial's graph is going as `x → ±∞`, you only need the **leading term** (the one with the biggest exponent). It's the driver; the rest of the terms are just passengers.
+
+| Degree | Leading Coefficient | End Behaviour          |
+|--------|---------------------|------------------------|
+| Even   | Positive            | Up on both ends (↑↑)   |
+| Even   | Negative            | Down on both ends (↓↓) |
+| Odd    | Positive            | Left down, right up (↙↗) |
+| Odd    | Negative            | Left up, right down (↗↙) |
+
+### Turning Points & X-Intercepts: The Wiggles
+The degree also sets a limit on how complex the graph can be.
+
+> A polynomial of degree **n** can have at most **n** x-intercepts and at most **n-1** turning points (the "hills" and "valleys").
+
+A degree 2 function (quadratic) has at most 1 turning point. A degree 5 function (quintic) can have up to 4 turning points. The rule is simple: **the higher the degree, the more *wiggle* the graph is allowed to have.**
+
+---
+
+## Next Up…
+
+Now that we know how to recognize, classify, and read the basic signals of a polynomial, we’re ready to start pulling them apart.
+
+Up next, we’ll dive into:
+- Factoring polynomials
+- The Factor Theorem (your new best friend)
+- Long division (yes, from elementary school, but with ✨*more algebra*✨)
+- Transformations, symmetry, and more
+
+<Link href="/chapters/adv-func/polynomials-factoring" type="next">Let’s get factoring →</Link>

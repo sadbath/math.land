@@ -1,0 +1,56 @@
+---
+interface Props {
+    type: 'note' | 'tip' | 'warning' | 'danger';
+    title?: string;
+}
+
+const { type, title } = Astro.props;
+
+const titles = {
+    note: 'NOTE',
+    tip: 'TIP',
+    warning: 'WARNING',
+    danger: 'DANGER',
+};
+
+const displayTitle = title || titles[type];
+---
+
+<div class:list={["admonition", type]}>
+    <strong class="admonition-title">{displayTitle}</strong>
+    <div class="admonition-content">
+        <slot />
+    </div>
+</div>
+
+<style>
+    .admonition {
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        border-left: 5px solid;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+    }
+    .admonition-title {
+        display: block;
+        font-family: var(--font-sans);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    .admonition-content :global(p) {
+        margin: 0;
+    }
+    .admonition-content :global(p:not(:first-child)) {
+        margin-top: 1rem;
+    }
+
+    /* Color Variants */
+    .note { border-color: #4dabf7; background-color: #f1f8ff; }
+    .note .admonition-title { color: #1971c2; }
+    .tip { border-color: #69db7c; background-color: #f0fff4; }
+    .tip .admonition-title { color: #2f9e44; }
+    .warning { border-color: #ffc078; background-color: #fff9f0; }
+    .warning .admonition-title { color: #e8590c; }
+    .danger { border-color: #ff8787; background-color: #fff5f5; }
+    .danger .admonition-title { color: #c92a2a; }
+</style>

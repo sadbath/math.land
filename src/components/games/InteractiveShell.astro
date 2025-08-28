@@ -1,0 +1,156 @@
+---
+// This component provides the container and a full set of styles
+// for any interactive content placed inside it.
+---
+<div class="interactive-shell">
+    <slot />
+</div>
+
+<style>
+    /* === Main Container Styling === */
+    .interactive-shell {
+        background-color: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e9ecef;
+        padding: 1.5rem;
+        margin: 2.5rem 0;
+        margin-right: 30px;
+        box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.05),
+                0 0 20px 4px rgba(132, 94, 247, 0.15);
+        transition: all 0.2s ease-in-out;
+    }
+    .interactive-shell:hover {
+        box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.07),
+                0 0 25px 8px rgba(132, 94, 247, 0.2);
+    }
+
+    /* === GLOBAL STYLES for any component inside the shell === */
+    /* These styles will apply to elements inside the <slot /> */
+
+    /* Instructions Text */
+    .interactive-shell :global(.interactive-instructions) {
+        margin-top: 0;
+        font-family: var(--font-serif);
+        color: #495057;
+        text-align: center;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Problem Display Area */
+    .interactive-shell :global(.interactive-problem) {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 2rem 1rem;
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+
+    /* Grid for Answer Options */
+    .interactive-shell :global(.interactive-option-grid) {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+
+    /* Duolingo-style Option Buttons */
+    .interactive-shell :global(.interactive-button) {
+        padding: 1rem;
+        border: 1px solid #e9ecef;
+        border-bottom: 4px solid #e9ecef; /* The 3D effect */
+        border-radius: 12px;
+        background-color: #fff;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        font-family: var(--font-sans);
+        color: #495057;
+        transition: all 0.1s ease-in-out;
+    }
+    .interactive-shell :global(.interactive-button:hover) {
+        background-color: #f8f9fa;
+    }
+    .interactive-shell :global(.interactive-button:active) {
+        transform: translateY(2px); /* Button press effect */
+        border-bottom-width: 2px;
+    }
+    .interactive-shell :global(.interactive-button.selected) {
+        background-color: #dbe4ff; /* Light blue selected state */
+        border-color: #748ffc;
+        color: #364fc7;
+    }
+
+    /* Big Action Button (Check/Continue) */
+    .interactive-shell :global(.interactive-action-button) {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+        border-bottom: 4px solid #2b8a3e; /* Darker green */
+        border-radius: 12px;
+        cursor: pointer;
+        background-color: #51cf66; /* Bright green */
+        color: #fff;
+        transition: all 0.1s ease-in-out;
+    }
+    .interactive-shell :global(.interactive-action-button:hover) {
+        background-color: #69db7c;
+    }
+    .interactive-shell :global(.interactive-action-button:active) {
+        transform: translateY(2px);
+        border-bottom-width: 2px;
+    }
+    .interactive-shell :global(.interactive-action-button.continue) {
+        background-color: #364fc7;
+        border-bottom-color: #182669;
+    }
+
+
+    /* Feedback Section */
+    .interactive-shell :global(.interactive-feedback) {
+        min-height: 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1rem;
+        margin-top: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        border-top: 2px solid;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s, transform 0.3s;
+    }
+    .interactive-shell :global(.interactive-feedback.visible) {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .interactive-shell :global(.interactive-feedback.correct) {
+        background-color: #e9fcf1;
+        border-color: #51cf66;
+    }
+    .interactive-shell :global(.interactive-feedback.incorrect) {
+        background-color: #fff5f5;
+        border-color: #ff8787;
+    }
+    .interactive-shell :global(.feedback-title) {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .interactive-shell :global(.feedback-explanation) {
+        margin: 0.5rem 0 0;
+        color: #495057;
+        font-family: var(--font-serif);
+        line-height: 1.6;
+    }
+    .interactive-shell :global(.feedback-title.correct) { color: #2b8a3e; }
+    .interactive-shell :global(.feedback-title.incorrect) { color: #c92a2a; }
+
+</style>

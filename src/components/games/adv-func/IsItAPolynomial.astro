@@ -1,0 +1,126 @@
+---
+import InteractiveShell from '../InteractiveShell.astro';
+
+// Generate a unique ID for this specific instance of the game.
+// This is the key to making the script robust and preventing conflicts.
+const uniqueId = `poly-game-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div id={uniqueId}>
+    <InteractiveShell>
+        <p class="interactive-instructions">
+            Is this a polynomial?
+        </p>
+
+        <div class="interactive-problem">
+            <code class="expression-text"></code>
+        </div>
+
+        <div class="interactive-option-grid">
+            <button class="interactive-button" data-answer="yes">Yes</button>
+            <button class="interactive-button" data-answer="no">No</button>
+        </div>
+
+        <div class="interactive-feedback">
+            <p class="feedback-title"></p>
+            <p class="feedback-explanation"></p>
+        </div>
+    </InteractiveShell>
+</div>
+
+<style>
+    .expression-text {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #343a40;
+        font-family: var(--font-mono);
+    }
+
+    /* These styles are now scoped to the unique ID for reliability */
+    [id^="poly-game-"] .interactive-button.correct-answer {
+        background-color: #d3f9d8 !important;
+        border-color: #51cf66 !important;
+        color: #2b8a3e !important;
+    }
+    [id^="poly-game-"] .interactive-button.incorrect-answer {
+        background-color: #ffe3e3 !important;
+        border-color: #ff8787 !important;
+        color: #c92a2a !important;
+    }
+    [id^="poly-game-"] .interactive-button.was-correct {
+        box-shadow: 0 0 0 2px #51cf66;
+    }
+</style>
+
+<script define:vars={{ uniqueId }}>
+    // Use the unique ID to find the container for this specific game instance.
+    const container = document.getElementById(uniqueId);
+
+    const questions = [
+        { expression: '3x⁻² + 1', isPolynomial: false, explanation: 'Negative exponents are not allowed.' },
+        { expression: 'x⁵ - 2x⁴ + x', isPolynomial: true, explanation: 'All exponents are whole numbers.' },
+        { expression: '√x + 5', isPolynomial: false, explanation: 'A square root is a fractional exponent (x¹/²).' },
+        { expression: '7x² + 3', isPolynomial: true, explanation: 'The exponents (2 and 0) are whole numbers.' },
+        { expression: '4/x - x²', isPolynomial: false, explanation: 'A variable in the denominator is a negative exponent (4x⁻¹).' },
+        { expression: '12', isPolynomial: true, explanation: 'A constant is a polynomial of degree 0.' },
+    ];
+    let currentQuestion;
+
+    const display = container.querySelector('.expression-text');
+    const optionButtons = container.querySelectorAll('.interactive-button');
+    const feedbackSection = container.querySelector('.interactive-feedback');
+    const feedbackTitle = container.querySelector('.feedback-title');
+    const feedbackExplanation = container.querySelector('.feedback-explanation');
+
+    function loadQuestion() {
+        let newQuestion;
+        do {
+            newQuestion = questions[Math.floor(Math.random() * questions.length)];
+        } while (newQuestion === currentQuestion);
+        currentQuestion = newQuestion;
+
+        display.textContent = currentQuestion.expression;
+        // Hide the feedback section correctly.
+        feedbackSection.classList.remove('visible');
+
+        optionButtons.forEach(b => {
+            b.disabled = false;
+            b.classList.remove('correct-answer', 'incorrect-answer', 'was-correct');
+        });
+    }
+
+    optionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            optionButtons.forEach(b => b.disabled = true);
+
+            const userAnswer = button.dataset.answer === 'yes';
+            const isCorrect = userAnswer === currentQuestion.isPolynomial;
+
+            feedbackSection.classList.remove('correct', 'incorrect');
+            feedbackTitle.classList.remove('correct', 'incorrect');
+
+            if (isCorrect) {
+                button.classList.add('correct-answer');
+                feedbackSection.classList.add('correct');
+                feedbackTitle.classList.add('correct');
+                feedbackTitle.textContent = 'Correct!';
+            } else {
+                button.classList.add('incorrect-answer');
+                feedbackSection.classList.add('incorrect');
+                feedbackTitle.classList.add('incorrect');
+                feedbackTitle.textContent = 'Not quite!';
+
+                const correctButton = container.querySelector(`[data-answer="${currentQuestion.isPolynomial ? 'yes' : 'no'}"]`);
+                correctButton.classList.add('was-correct');
+            }
+
+            feedbackExplanation.textContent = currentQuestion.explanation;
+            // Show the feedback section correctly.
+            feedbackSection.classList.add('visible');
+
+            setTimeout(loadQuestion, 3000);
+        });
+    });
+
+    loadQuestion();
+</script>

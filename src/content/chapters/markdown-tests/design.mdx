@@ -1,0 +1,96 @@
+---
+title: 'MDX Style Guide & Test Page'
+chapterNumber: 1
+editUrl: 'https://github.com/sadbath/math.land/blob/main/src/content/chapters/functions/1-functions.mdx'
+---
+import Link from '../../../components/Link.astro';
+import Emph from '../../../components/Emph.astro';
+import Highlight from '../../../components/Highlight.astro';
+import RuleList from '../../../components/RuleList.astro';
+import Admonition from '../../../components/Admonition.astro';
+import ColoredTitle from '../../../components/ColoredTitle.astro';
+
+
+This page demonstrates all the standard Markdown and custom component capabilities available in this project. If everything on this page renders correctly, your setup is perfect.
+
+<ColoredTitle text="Full Component & Style Guide" />
+
+This page demonstrates all the standard Markdown and custom component capabilities available in this project.
+
+
+
+## Custom Inline Components
+
+These components are designed to be used within paragraphs of text.
+
+### Highlight & Emph
+
+The <Emph>Emph</Emph> component adds a subtle squiggle emphasis. The <Highlight color="yellow">Highlight</Highlight> component makes text stand out with an italic, bold style. You can change the color to <Highlight color="pink">pink</Highlight>, <Highlight color="green">green</Highlight>, or <Highlight color="blue">blue</Highlight>.
+
+### Custom Link Component
+
+This component handles different types of links automatically.
+- Internal Page Link: <Link href="/chapters/adv-func/1-polynomials" type="name">Polynomials Intro</Link>
+- External Site Link: <Link href="https://astro.build" type="external">Astro Docs</Link>
+- Squiggle Link (default): <Link href="/">Home Page</Link>
+
+---
+
+## Custom Block Components
+
+These are larger components that structure content on the page.
+
+### Rule Lists
+
+These are great for "do" and "don't" lists.
+
+<RuleList type="good" title="Good Practices:">
+    - Use semantic HTML.
+    - Write clear and concise content.
+    - `code snippets` are automatically styled.
+</RuleList>
+
+<RuleList type="bad" title="Bad Practices:">
+    - Forgetting to restart the dev server.
+    - `mutating state` directly in a reactive framework.
+    - Assuming a client-side script will just work.
+</RuleList>
+
+### Admonitions
+
+This is the definitive test for our component system.
+
+<Admonition type="note">
+    This is a **note**. It's for supplementary information. You can use *Markdown* inside!
+</Admonition>
+
+<Admonition type="tip" title="Pro Tip:">
+    You can provide a custom title. This is useful for helpful advice or shortcuts.
+</Admonition>
+
+<Admonition type="warning">
+    This is a warning. It calls attention to potential pitfalls or important details that should not be overlooked.
+</Admonition>
+
+<Admonition type="danger">
+    This is for critical information. Ignoring this could lead to incorrect results or fundamental misunderstandings.
+</Admonition>
+
+---
+
+## Standard Markdown
+
+Just to be sure, here are the basics.
+
+> This is a standard blockquote, styled differently from our Admonitions.
+
+- An unordered list
+- With a few items
+1. And a nested
+2. ordered list
+
+```javascript
+// A standard code block
+function test() {
+  return "Everything works!";
+}

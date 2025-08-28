@@ -1,0 +1,117 @@
+---
+import InteractiveShell from '../InteractiveShell.astro';
+---
+
+<InteractiveShell>
+    <p class="interactive-instructions">
+        Based on the end behavior shown, select the correct properties.
+    </p>
+
+    <div class="interactive-problem">
+        <span id="end-behavior-display" class="end-behavior-text">↙↗</span>
+    </div>
+
+    <div class="interactive-option-grid">
+        <button class="interactive-button" data-group="degree" data-value="even">Even Degree</button>
+        <button class="interactive-button" data-group="degree" data-value="odd">Odd Degree</button>
+        <button class="interactive-button" data-group="coefficient" data-value="positive">Positive Coeff.</button>
+        <button class="interactive-button" data-group="coefficient" data-value="negative">Negative Coeff.</button>
+    </div>
+
+    <button id="check-answer-btn" class="interactive-action-button">Check</button>
+
+    <div id="feedback-section" class="interactive-feedback">
+        <p id="feedback-title" class="feedback-title"></p>
+        <p id="feedback-explanation" class="feedback-explanation"></p>
+    </div>
+</InteractiveShell>
+
+<style>
+    /* The ONLY style left is the one unique to this interactive! */
+    .end-behavior-text {
+        font-size: 3.5rem;
+        font-weight: 600;
+        color: #212529;
+        letter-spacing: 0.25rem;
+    }
+</style>
+
+<script>
+    // The logic remains, but now targets the new classes
+    const questions = [
+        { behavior: '↙↗', degree: 'odd', coefficient: 'positive', explanation: 'Odd degrees go opposite ways. Positive coefficients rise right.' },
+        { behavior: '↗↙', degree: 'odd', coefficient: 'negative', explanation: 'Odd degrees go opposite ways. Negative coefficients fall right.' },
+        { behavior: '↖↗', degree: 'even', coefficient: 'positive', explanation: 'Even degrees go the same way. Positive coefficients go up.' },
+        { behavior: '↙↘', degree: 'even', coefficient: 'negative', explanation: 'Even degrees go the same way. Negative coefficients go down.' },
+    ];
+    let currentQuestion = questions[0];
+    let selectedDegree = null;
+    let selectedCoefficient = null;
+
+    const display = document.getElementById('end-behavior-display');
+    const checkBtn = document.getElementById('check-answer-btn');
+    const feedbackSection = document.getElementById('feedback-section');
+    const feedbackTitle = document.getElementById('feedback-title');
+    const feedbackExplanation = document.getElementById('feedback-explanation');
+
+    function setupButtons(groupName) {
+        const buttons = document.querySelectorAll(`[data-group="${groupName}"]`);
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                if (groupName === 'degree') selectedDegree = button.dataset.value;
+                if (groupName === 'coefficient') selectedCoefficient = button.dataset.value;
+            });
+        });
+    }
+
+    function checkAnswer() {
+        if (!selectedDegree || !selectedCoefficient) return;
+
+        const isCorrect = selectedDegree === currentQuestion.degree && selectedCoefficient === currentQuestion.coefficient;
+
+        feedbackSection.classList.remove('correct', 'incorrect');
+        feedbackTitle.classList.remove('correct', 'incorrect');
+
+        if (isCorrect) {
+            feedbackSection.classList.add('correct');
+            feedbackTitle.classList.add('correct');
+            feedbackTitle.textContent = 'Correct!';
+            feedbackExplanation.textContent = currentQuestion.explanation;
+            checkBtn.textContent = 'Continue';
+            checkBtn.classList.add('continue');
+        } else {
+            feedbackSection.classList.add('incorrect');
+            feedbackTitle.classList.add('incorrect');
+            feedbackTitle.textContent = 'Not quite!';
+            feedbackExplanation.textContent = 'Try selecting a different combination.';
+        }
+        feedbackSection.classList.add('visible');
+    }
+
+    function nextQuestion() {
+        const currentIndex = questions.indexOf(currentQuestion);
+        currentQuestion = questions[(currentIndex + 1) % questions.length];
+
+        display.textContent = currentQuestion.behavior;
+        selectedDegree = null;
+        selectedCoefficient = null;
+        document.querySelectorAll('.interactive-button').forEach(btn => btn.classList.remove('selected'));
+
+        feedbackSection.classList.remove('visible');
+        checkBtn.textContent = 'Check';
+        checkBtn.classList.remove('continue');
+    }
+
+    checkBtn.addEventListener('click', () => {
+        if (checkBtn.textContent === 'Continue') {
+            nextQuestion();
+        } else {
+            checkAnswer();
+        }
+    });
+
+    setupButtons('degree');
+    setupButtons('coefficient');
+</script>
